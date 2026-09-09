@@ -1,0 +1,12 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {emptyRegistration,validatePersonal,validateCourse,validateDocuments,validateFile,MAX_FILE_SIZE} from '../lib/registration.ts';
+const person={...emptyRegistration,name:'Pessoa Exemplo',birthDate:'2000-02-29',gender:'Feminino',nationality:'Angolana',documentNumber:'TESTE00001',phone:'+244 900 000 000',address:'Morada de exemplo'};
+test('personal data accepts leap day and international phone',()=>assert.deepEqual(validatePersonal(person,'2026-09-09'),{}));
+test('invalid or future birth dates fail',()=>{for(const birthDate of ['2001-02-29','2027-01-01','2026-09-09','']) assert.ok(validatePersonal({...person,birthDate},'2026-09-09').birthDate);});
+test('empty required personal fields block progress',()=>assert.equal(Object.keys(validatePersonal(emptyRegistration)).length,7));
+test('course date cannot be in the past and custom course requires a name',()=>{assert.deepEqual(validateCourse({...person,course:'AutoCAD',period:'Tarde',startDate:'2026-09-09'},'2026-09-09'),{});assert.ok(validateCourse({...person,course:'Outro',period:'Tarde',startDate:'2026-09-08'},'2026-09-09').startDate);assert.ok(validateCourse({...person,course:'Outro'},'2026-09-09').otherCourse);});
+test('payment proof is mandatory independently of other documents',()=>{const f=new File(['example'],'test.pdf');assert.deepEqual(Object.keys(validateDocuments({photo:f,identity:f,payment:null})),['payment']);});
+test('PDF accepted as document but never as portrait',async()=>{const f=new File(['%PDF-1.7'],'sample.pdf',{type:'application/pdf'});assert.equal(await validateFile(f,'identity'),null);assert.ok(await validateFile(f,'photo'));});
+test('empty, oversize and disguised files are rejected',async()=>{for(const f of [new File([],'empty.png'),new File([new Uint8Array(MAX_FILE_SIZE+1)],'large.png'),new File(['not an image'],'fake.png',{type:'image/png'})])assert.ok(await validateFile(f,'photo'));});
+test('extension and MIME must match actual signature',async()=>{const bytes=new Uint8Array([137,80,78,71,13,10,26,10]);assert.ok(await validateFile(new File([bytes],'image.jpg',{type:'image/jpeg'}),'photo'));assert.ok(await validateFile(new File([bytes],'image.png',{type:'application/pdf'}),'photo'));});
