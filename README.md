@@ -57,3 +57,6 @@ Node.js >=22.13 e pnpm. Instalar com `pnpm install`, iniciar com `pnpm dev`, com
 6. Revisão do front-end; 7–9. Supabase, integrações e lançamento.
 
 Repositório: https://github.com/emersonweverton781-pixel/centro
+
+## Revisão do frontend (etapa 6)
+Formador preservado entre menus; navegação móvel ajustada; agenda e catálogo coerentes com a sessão; edição de turmas preservada após desativar curso; resumos e textos adaptados a ecrãs estreitos. 33 testes aprovados, incluindo o percurso integrado entre secretaria, formação, financeiro e certificados. Ver detalhes e roteiro em REVISAO-FRONTEND.md. Sem testes visuais de navegador nesta etapa. Backend continua pendente de aprovação.
