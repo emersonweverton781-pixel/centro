@@ -60,3 +60,6 @@ Repositório: https://github.com/emersonweverton781-pixel/centro
 
 ## Revisão do frontend (etapa 6)
 Formador preservado entre menus; navegação móvel ajustada; agenda e catálogo coerentes com a sessão; edição de turmas preservada após desativar curso; resumos e textos adaptados a ecrãs estreitos. 33 testes aprovados, incluindo o percurso integrado entre secretaria, formação, financeiro e certificados. Ver detalhes e roteiro em REVISAO-FRONTEND.md. Sem testes visuais de navegador nesta etapa. Backend continua pendente de aprovação.
+
+## Inscrições no atendimento
+Administrador e Secretaria dispõem de Nova inscrição em Inscrições. O formulário permite novo aluno ou ficha existente, curso ativo, período, início pretendido e três anexos fictícios. Os anexos são verificados (formato, tamanho e leitura de imagem) e ficam disponíveis na análise enquanto a sessão durar. A inscrição entra pendente, preserva a ficha existente e impede duplicações de BI e de inscrição ativa no mesmo curso/período. 37 testes aprovados. Ainda sem persistência nem Supabase.

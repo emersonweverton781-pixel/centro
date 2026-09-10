@@ -1,8 +1,8 @@
-import {courseGroups,emptyRegistration,validatePersonal,type Registration} from './registration';
+import {courseGroups,emptyRegistration,validatePersonal,type Registration,type Documents} from './registration';
 
 export type Course={id:string;name:string;category:string;duration:string;hours:string;price:string;active:boolean};
 export type Student=Registration & {id:string};
-export type Entry={id:string;studentId:string;courseId:string;requestedCourse?:string;period:string;startDate:string;date:string;status:'Pendente'|'Confirmada'|'Rejeitada';reference:string;reason:string;documents:{photo:boolean;identity:boolean;payment:boolean};history:{action:string;actor:string;date:string}[]};
+export type Entry={id:string;studentId:string;courseId:string;requestedCourse?:string;period:string;startDate:string;date:string;status:'Pendente'|'Confirmada'|'Rejeitada';reference:string;reason:string;documents:{photo:boolean;identity:boolean;payment:boolean};attachments?:Documents;history:{action:string;actor:string;date:string}[]};
 export type Office={students:Student[];courses:Course[];entries:Entry[]};
 export const normalize=(s:string)=>s.normalize('NFD').replace(/[\u0300-\u036f\s-]/g,'').toLowerCase();
 export function initialOffice():Office{
