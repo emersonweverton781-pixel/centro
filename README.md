@@ -1,6 +1,16 @@
 # BEZA INOVAÇÕES — Centro de Formação
 
-Etapas 1 e 2: identidade visual, cinco painéis demonstrativos e pré-inscrição pública em `/inscricao`.
+Etapas 1 a 3: identidade visual, cinco painéis demonstrativos, pré-inscrição pública em `/inscricao` e gestão da secretaria no painel inicial.
+
+## Secretaria, alunos e cursos (etapa 3)
+- Nos perfis Administrador e Secretaria, abrir Inscrições, Alunos ou Cursos no menu.
+- Fila por ordem de receção, pesquisa por nome/BI, filtros por estado, curso, período e datas, com paginação.
+- Análise dos dados, documentos ilustrativos, associação de curso e confirmação ou rejeição com motivo. Matrícula de demonstração apenas ao confirmar; histórico com perfil e data.
+- Ficha única por BI/Passaporte, edição e histórico de várias inscrições. Exemplo: DEMO10001 tem dois cursos.
+- Criar, editar, ativar e desativar cursos, preservando as inscrições existentes. Valores originais por definir.
+- Dados mantidos na memória do painel, incluindo ao alternar módulos. Recarregar ou sair repõe os exemplos. A pré-inscrição pública ainda é uma simulação independente; documentos e alterações do catálogo não são partilhados entre páginas.
+- Não existe autenticação efetiva, persistência, envio WhatsApp ou documento oficial. PDF/QR é previsto na etapa 5; integrações no backend depois de concluído o front-end.
+- Validação: 16 testes das regras de inscrição e secretaria, TypeScript e compilação estática. WebMCP de navegação verificado com entrada válida e inválida. Sem testes visuais de navegador nesta etapa.
 
 ## Pré-inscrição
 - Quatro passos: dados pessoais, curso e período, documentos, revisão.
@@ -24,6 +34,6 @@ Verificação TypeScript, compilação estática e testes das regras de datas, c
 Node.js >=22.13 e pnpm. Instalar com `pnpm install`, iniciar com `pnpm dev`, compilar com `pnpm build`.
 
 ## Etapas seguintes (dependem de aprovação)
-3. Secretaria, alunos e cursos; 4. Gestão académica; 5. Financeiro e documentos; 6. Revisão do front-end; 7–9. Supabase, integrações e lançamento.
+4. Gestão académica; 5. Financeiro e documentos; 6. Revisão do front-end; 7–9. Supabase, integrações e lançamento.
 
 Repositório: https://github.com/emersonweverton781-pixel/centro
