@@ -1,6 +1,15 @@
 # BEZA INOVAÇÕES — Centro de Formação
 
-Etapas 1 a 3: identidade visual, cinco painéis demonstrativos, pré-inscrição pública em `/inscricao` e gestão da secretaria no painel inicial.
+Etapas 1 a 4: identidade visual, painéis demonstrativos, pré-inscrição pública em `/inscricao`, secretaria e gestão académica no painel inicial.
+
+## Gestão académica (etapa 4)
+- Administrador/Secretaria: menu Turmas, criação e edição de turmas, curso, período, formador, datas, dias da semana, horas e sala. Deteta sobreposições de sala ou formador.
+- Associação manual de inscrições confirmadas do mesmo curso/período, sem duplicação. Turmas com alunos preservam curso e calendário nesta demonstração.
+- Formador: seleção explícita entre dois perfis fictícios; cada um vê apenas as turmas atribuídas. Presenças por aula/data e avaliações na escala 0–20. Datas futuras e fora do período da turma são bloqueadas.
+- Aluno: consulta do exemplo Pedro Neto (DEMO10004), com horário, frequência, notas e média simples informativa. Os registos guardados pelo formador refletem-se neste portal ao trocar de perfil.
+- Presenças exigem uma marca por aluno; editar uma data substitui o registo. Notas em branco ficam por lançar e não contam para a média.
+- Todos os dados continuam apenas na memória do painel. Sem autenticação efetiva, automatização de matrícula ou alterações no Supabase. Avaliações, presenças e calendário iniciais são exemplos.
+- Verificação: 23 testes passaram e TypeScript sem erros. Navegação WebMCP para Turmas testada com entrada válida e inválida. Sem QA visual de navegador nesta etapa.
 
 ## Secretaria, alunos e cursos (etapa 3)
 - Nos perfis Administrador e Secretaria, abrir Inscrições, Alunos ou Cursos no menu.
@@ -34,6 +43,6 @@ Verificação TypeScript, compilação estática e testes das regras de datas, c
 Node.js >=22.13 e pnpm. Instalar com `pnpm install`, iniciar com `pnpm dev`, compilar com `pnpm build`.
 
 ## Etapas seguintes (dependem de aprovação)
-4. Gestão académica; 5. Financeiro e documentos; 6. Revisão do front-end; 7–9. Supabase, integrações e lançamento.
+5. Financeiro e documentos; 6. Revisão do front-end; 7–9. Supabase, integrações e lançamento.
 
 Repositório: https://github.com/emersonweverton781-pixel/centro

@@ -64,3 +64,5 @@ export default function OfficeModule({page,role,state,setState}:{page:string;rol
  </div>;
 }
 
+
+export {Modal as OfficeModal};
