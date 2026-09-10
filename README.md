@@ -1,6 +1,17 @@
 # BEZA INOVAÇÕES — Centro de Formação
 
-Etapas 1 a 4: identidade visual, painéis demonstrativos, pré-inscrição pública em `/inscricao`, secretaria e gestão académica no painel inicial.
+Etapas 1 a 5: identidade visual, painéis demonstrativos, pré-inscrição pública em `/inscricao`, secretaria, gestão académica, financeiro e documentos.
+
+## Financeiro, documentos e relatórios (etapa 5)
+- Administrador/Financeiro: cobranças de inscrição ou propina por mês; pagamentos parciais; saldo, atraso, histórico e estorno com motivo, sem apagar o movimento original. Montantes calculados em cêntimos inteiros.
+- Administrador/Secretaria: menu Documentos com PDF das inscrições confirmadas; menu Certificados com análise de frequência/média, duração/carga horária do curso e confirmação manual de conclusão.
+- Administrador configura os critérios de emissão. Os valores iniciais de 75% e 10/20 são apenas exemplos. Os certificados preservam os dados e critérios da emissão, mesmo se as notas mudarem depois.
+- O aluno fictício Pedro Neto pode consultar o certificado emitido para a sua inscrição em Meus certificados.
+- Relatórios por curso/período com datas, pendentes/rejeitadas/confirmadas, taxa, recebimentos e saldos, exportáveis em CSV. Datas filtram receção das inscrições e pagamentos; saldo atual inclui cobranças de todas as datas para os filtros de aluno/curso/período.
+- PDFs gerados localmente no navegador (pdf-lib e qrcode), com logótipo e identificação DEMONSTRAÇÃO — SEM VALIDADE OFICIAL. Pré-visualização, download e impressão pelo leitor de PDF.
+- O QR contém somente referência demonstrativa e aponta para `/verificar?ref=...`. A página não consulta a base de dados nem autentica documentos reais.
+- As cobranças iniciais são valores fictícios, sem relação com preços oficiais. Nada é enviado ao Supabase, bancos ou WhatsApp.
+- Validação: 30 testes das regras passaram; TypeScript, compilação estática, revisão visual de três modelos PDF e descodificação do QR da inscrição; navegação WebMCP válida/inválida. Sem QA visual da aplicação no navegador.
 
 ## Gestão académica (etapa 4)
 - Administrador/Secretaria: menu Turmas, criação e edição de turmas, curso, período, formador, datas, dias da semana, horas e sala. Deteta sobreposições de sala ou formador.
@@ -18,7 +29,7 @@ Etapas 1 a 4: identidade visual, painéis demonstrativos, pré-inscrição públ
 - Ficha única por BI/Passaporte, edição e histórico de várias inscrições. Exemplo: DEMO10001 tem dois cursos.
 - Criar, editar, ativar e desativar cursos, preservando as inscrições existentes. Valores originais por definir.
 - Dados mantidos na memória do painel, incluindo ao alternar módulos. Recarregar ou sair repõe os exemplos. A pré-inscrição pública ainda é uma simulação independente; documentos e alterações do catálogo não são partilhados entre páginas.
-- Não existe autenticação efetiva, persistência, envio WhatsApp ou documento oficial. PDF/QR é previsto na etapa 5; integrações no backend depois de concluído o front-end.
+- Não existe autenticação efetiva, persistência, envio WhatsApp ou documento oficial. PDF/QR demonstrativo na etapa 5; integrações no backend depois de concluído o front-end.
 - Validação: 16 testes das regras de inscrição e secretaria, TypeScript e compilação estática. WebMCP de navegação verificado com entrada válida e inválida. Sem testes visuais de navegador nesta etapa.
 
 ## Pré-inscrição
@@ -43,6 +54,6 @@ Verificação TypeScript, compilação estática e testes das regras de datas, c
 Node.js >=22.13 e pnpm. Instalar com `pnpm install`, iniciar com `pnpm dev`, compilar com `pnpm build`.
 
 ## Etapas seguintes (dependem de aprovação)
-5. Financeiro e documentos; 6. Revisão do front-end; 7–9. Supabase, integrações e lançamento.
+6. Revisão do front-end; 7–9. Supabase, integrações e lançamento.
 
 Repositório: https://github.com/emersonweverton781-pixel/centro
