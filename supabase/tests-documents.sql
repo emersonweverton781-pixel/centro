@@ -1,0 +1,37 @@
+begin;
+do $$
+declare uid uuid:=gen_random_uuid(); eid text:='test-'||gen_random_uuid(); sid text:='test-'||gen_random_uuid(); test_email text:=gen_random_uuid()||'@example.invalid'; o jsonb; e jsonb; d jsonb; v jsonb; frozen jsonb;
+begin
+ if has_function_privilege('anon','public.centro_document(text)','execute') or has_function_privilege('authenticated','public.centro_record_document(jsonb,jsonb)','execute') or has_table_privilege('authenticated','public.centro_documents','select') then raise exception 'Private document privileges exposed'; end if;
+ insert into auth.users(id,email,email_confirmed_at) values(uid,test_email,now());
+ insert into public.centro_access values(test_email,'Teste transacional','Secretaria',null,true);
+ perform set_config('request.jwt.claim.sub',uid::text,true);
+ select data into o from public.centro_state where section='office' for update;
+ e:=jsonb_build_object('id',eid,'studentId',sid,'courseId','stage8-test','status','Pendente','reference','','history','[]'::jsonb,'period','Manhã','startDate','2026-12-01');
+ o:=jsonb_set(o,'{students}',o->'students'||jsonb_build_array(jsonb_build_object('id',sid,'name','Aluno de teste','documentNumber',sid,'phone','900000000')));
+ o:=jsonb_set(o,'{courses}',o->'courses'||jsonb_build_array(jsonb_build_object('id','stage8-test','name','Curso de teste','active',true)));
+ o:=jsonb_set(o,'{entries}',o->'entries'||jsonb_build_array(e));
+ update public.centro_state set data=o where section='office';
+ if exists(select 1 from public.centro_documents where entry_id=eid) then raise exception 'Pending document issued'; end if;
+ o:=jsonb_set(o,'{entries}',(select jsonb_agg(case when value->>'id'=eid then jsonb_set(value,'{status}','"Confirmada"') else value end) from jsonb_array_elements(o->'entries')));
+ update public.centro_state set data=o where section='office';
+ d:=public.centro_document(eid); frozen:=d;
+ if d->>'reference' not like 'MAT-%' or d->>'name'<>'Aluno de teste' or d->>'token' is null then raise exception 'Approved snapshot missing'; end if;
+ v:=public.centro_verify(d->>'token');
+ if v->>'status'<>'Confirmada' or v ?| array['name','phone','documentNumber','paths','student_id','token'] then raise exception 'Verification privacy failed'; end if;
+ if public.centro_verify('not-a-token') is not null then raise exception 'Unknown token accepted'; end if;
+ select data into o from public.centro_state where section='office';
+ o:=jsonb_set(o,'{students}',(select jsonb_agg(case when value->>'id'=sid then jsonb_set(value,'{name}','"Nome alterado"') else value end) from jsonb_array_elements(o->'students')));
+ update public.centro_state set data=o where section='office';
+ if public.centro_document(eid)<>frozen then raise exception 'Issued snapshot changed'; end if;
+ update public.centro_access set role='Aluno',person_id=sid where centro_access.email=test_email;
+ if public.centro_document(eid)<>frozen then raise exception 'Own document blocked'; end if;
+ update public.centro_access set person_id='another-student' where centro_access.email=test_email;
+ begin perform public.centro_document(eid);raise exception 'Other student allowed';exception when raise_exception then if sqlerrm='Other student allowed' then raise;end if;end;
+ update public.centro_access set role='Financeiro' where centro_access.email=test_email;
+ begin perform public.centro_document(eid);raise exception 'Finance allowed';exception when raise_exception then if sqlerrm='Finance allowed' then raise;end if;end;
+ update public.centro_access set role='Secretaria',active=false where centro_access.email=test_email;
+ begin perform public.centro_document(eid);raise exception 'Suspended allowed';exception when raise_exception then if sqlerrm='Suspended allowed' then raise;end if;end;
+end $$;
+rollback;
+select 'PASS: issue on confirmation, frozen snapshot, private access, student isolation, suspension, public verification privacy' as result;
