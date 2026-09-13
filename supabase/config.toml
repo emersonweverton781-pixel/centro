@@ -1,0 +1,7 @@
+project_id = "beza-centro"
+
+[functions.centro-inscricao]
+verify_jwt = false
+
+[functions.centro-acesso]
+verify_jwt = false

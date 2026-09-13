@@ -1,0 +1,4 @@
+import {createClient} from '@supabase/supabase-js';
+export const supabase=createClient('https://rggcrkcbiamilqjobqqn.supabase.co','sb_publishable_k3MyTSCZ1GWAgm9NtWt4HQ_AR_dM0XG');
+export async function rpc<T>(name:string,args:Record<string,unknown>={}):Promise<T>{const {data,error}=await supabase.rpc(name,args);if(error)throw new Error(error.message);return data as T;}
+export async function sendRegistration(person:unknown,files:Record<string,File|null>,id:string){const body=new FormData();body.set('person',JSON.stringify(person));body.set('requestId',id);for(const [kind,file] of Object.entries(files))if(file)body.set(kind,file);const {data,error}=await supabase.functions.invoke('centro-inscricao',{body});if(error){let message='Não foi possível enviar. Os dados continuam neste formulário; tente novamente.';try{const details=await error.context.json();if(details.error)message=details.error;}catch{}throw new Error(message);}return data.reference as string;}

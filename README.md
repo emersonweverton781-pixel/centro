@@ -1,3 +1,7 @@
+# Estado atual: etapa 7
+
+Supabase integrado para autenticação, permissões, inscrições com anexos e persistência. Consulte [ETAPA-7.md](ETAPA-7.md) para funcionamento, validação e limites. As secções seguintes registam a evolução histórica do frontend e descrevem estados anteriores.
+
 # BEZA INOVAÇÕES — Centro de Formação
 
 Etapas 1 a 5: identidade visual, painéis demonstrativos, pré-inscrição pública em `/inscricao`, secretaria, gestão académica, financeiro e documentos.
