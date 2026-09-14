@@ -1,6 +1,6 @@
 import type {DocumentData} from './documents';
 export type ApprovedDocument={reference:string;name:string;course:string;period:string;startDate:string;issued:string;token:string};
-export type Verification=Pick<ApprovedDocument,'reference'|'course'|'period'|'issued'>&{status:'Confirmada'};
+export type Verification=Pick<ApprovedDocument,'reference'|'course'|'issued'>&{status:'Confirmada'|'Concluído';kind?:'Inscrição'|'Certificado';period?:string;hours?:string};
 export function approvedDocument(d:ApprovedDocument):DocumentData {
  const date=(value:string)=>new Date(value.slice(0,10)+'T12:00:00').toLocaleDateString('pt-PT');
  return {kind:'Inscrição',official:true,verificationToken:d.token,reference:d.reference,name:d.name,course:d.course,issued:date(d.issued),rows:[['Matrícula',d.reference],['Período',d.period],['Início pretendido',date(d.startDate)]],statement:'A inscrição foi confirmada pela Secretaria. Apresente este comprovativo no arranque do curso. A data de início deverá ser confirmada com o centro.'};
